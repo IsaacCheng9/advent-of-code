@@ -17,6 +17,10 @@ from itertools import (  # NOQA
     combinations,  # NOQA
     combinations_with_replacement,  # NOQA
 )
+
+# Add the parent directory to the PYTHONPATH.
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from utils.utils import (  # NOQA
     run_with_timing,
     parse_input,
