@@ -23,7 +23,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from utils.utils import (  # NOQA
     run_with_timing,
-    parse_input,
+    parse_input_without_trailing_and_leading_whitespace,
     parse_lines,
     parse_ints,
     parse_2d_grid,
@@ -32,14 +32,14 @@ from utils.utils import (  # NOQA
 
 
 def part_one(file_name: str) -> int:
-    data = parse_input(file_name)
+    input = open(file_name)
     res = 0
 
     return res
 
 
 def part_two(file_name: str) -> int:
-    data = parse_input(file_name)
+    input = open(file_name)
     res = 0
 
     return res

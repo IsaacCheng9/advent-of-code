@@ -10,15 +10,18 @@ def run_with_timing(func: Callable, *args, **kwargs) -> tuple[Any, float]:
     return result, end - start
 
 
-def parse_input(file_path: str) -> str:
-    """Reads and returns the input data."""
+def parse_input_without_trailing_and_leading_whitespace(file_path: str) -> str:
+    """
+    Reads and returns the input data with leading and trailing whitespace
+    removed.
+    """
     with open(file_path) as f:
         return f.read().strip()
 
 
 def parse_lines(file_path: str) -> list[str]:
     """Reads and returns the input split into lines."""
-    return parse_input(file_path).split("\n")
+    return parse_input_without_trailing_and_leading_whitespace(file_path).split("\n")
 
 
 def parse_ints(file_path: str) -> list[int]:

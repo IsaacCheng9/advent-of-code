@@ -23,7 +23,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from utils.utils import (  # NOQA
     run_with_timing,
-    parse_input,
+    parse_input_without_trailing_and_leading_whitespace,
     parse_lines,
     parse_ints,
     parse_2d_grid,
