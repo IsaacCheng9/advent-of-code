@@ -49,7 +49,7 @@ if __name__ == "__main__":
     day_path = Path(__file__).parent
     input_path = day_path / "input.txt"
 
-    print("--- Part One ---")
+    print("\n--- Part One ---")
     answer1, duration1 = run_with_timing(part_one, str(input_path))
     print(f"Answer: {answer1}")
     print(f"Time: {duration1:.4f} seconds")
