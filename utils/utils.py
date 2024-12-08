@@ -2,12 +2,15 @@ from typing import Any, Callable
 import time
 
 
-def run_with_timing(func: Callable, *args, **kwargs) -> tuple[Any, float]:
-    """Run a function and return its result along with execution time."""
+def execute_with_runtime(func: Callable, *args, **kwargs) -> tuple[Any, float]:
+    """
+    Executes a function and returns its result along with runtime (ms).
+    """
     start = time.perf_counter()
     result = func(*args, **kwargs)
     end = time.perf_counter()
-    return result, end - start
+    runtime = (end - start) * 1000
+    return result, runtime
 
 
 def parse_input_without_trailing_and_leading_whitespace(file_path: str) -> str:

@@ -22,7 +22,7 @@ from itertools import (  # NOQA
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from utils.utils import (  # NOQA
-    run_with_timing,
+    execute_with_runtime,
     parse_input_without_trailing_and_leading_whitespace,
     parse_lines,
     parse_ints,
@@ -123,13 +123,13 @@ if __name__ == "__main__":
     input_path = day_path / "input.txt"
 
     print("--- Part One ---")
-    answer1, duration1 = run_with_timing(part_one, str(input_path))
+    answer1, duration1 = execute_with_runtime(part_one, str(input_path))
     print(f"Answer: {answer1}")
-    print(f"Time: {duration1:.4f} seconds")
+    print(f"Runtime: {duration1:.4f} milliseconds")
 
     print("\n--- Part Two ---")
-    answer2, duration2 = run_with_timing(part_two, str(input_path))
+    answer2, duration2 = execute_with_runtime(part_two, str(input_path))
     print(f"Answer: {answer2}")
-    print(f"Time: {duration2:.4f} seconds")
+    print(f"Runtime: {duration2:.4f} milliseconds")
 
-    print(f"\nTotal time: {duration1 + duration2:.4f} seconds")
+    print(f"\nTotal runtime: {duration1 + duration2:.4f} milliseconds")
