@@ -75,6 +75,62 @@ def part_one(file_name: str) -> int:
 
 
 def part_two(file_name: str) -> int:
+    grid = parse_2d_grid(file_name)
+    rows = len(grid)
+    cols = len(grid[0])
+
+    # Find the starting position.
+    for row in range(rows):
+        for col in range(cols):
+            if grid[row][col] == "^":
+                break
+        # Runs if the for loop didn't break, so we continue to the next cell.
+        else:
+            continue
+        # If we break in the for loop, we'll break here so we stop iterating.
+        break
+
+    # We move up initially.
+    row_diff = -1
+    col_diff = 0
+    # For each position, store what position we came from when visiting it.
+    visited_from = defaultdict(set)
+
+    while True:
+        new_row = row + row_diff
+        new_col = col + col_diff
+        # Continue moving until we go out of bounds.
+        if new_row not in range(rows) or new_col not in range(cols):
+            break
+
+        # Store the direction we came from when visiting the new position.
+        visited_from[(new_row, new_col)].add((row_diff, col_diff))
+        # If we bump into an obstruction, turn right by swapping the row and
+        # column differences, and applying a negative sign to the new column
+        # difference.
+        if grid[new_row][new_col] == "#":
+            row_diff, col_diff = col_diff, -row_diff
+        # Otherwise, continue moving in the same direction.
+        else:
+            row += row_diff
+            col += col_diff
+
+    valid_new_obstructions_count = 0
+    for (row, col), direction in visited_from.items():
+        # If the cell isn't empty, we can't place an obstruction there.
+        if grid[row][col] != ".":
+            continue
+        # If we visit a position multiple times from different directions,
+        # placing an obstruction there will create a loop - we don't actually
+        # have to simulate this, so we can save a lot of time.
+        if len(direction) > 1:
+            valid_new_obstructions_count += 1
+
+    return valid_new_obstructions_count
+
+
+# !IMPORTANT: Runs very slowly (~25 seconds instead of 0.003 seconds).
+def part_two_original_bruteforce(file_name: str) -> int:
     def new_obstruction_creates_a_loop(grid, row, col):
         row_diff = -1
         col_diff = 0
@@ -146,7 +202,6 @@ if __name__ == "__main__":
     print(f"Answer: {answer1}")
     print(f"Time: {duration1:.4f} seconds")
 
-    # !IMPORTANT: Runs quite slowly due to the backtracking approach.
     print("\n--- Part Two ---")
     answer2, duration2 = run_with_timing(part_two, str(input_path))
     print(f"Answer: {answer2}")
