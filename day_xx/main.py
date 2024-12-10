@@ -32,14 +32,14 @@ from utils.utils import (  # NOQA
 
 
 def part_one(file_name: str) -> int:
-    input = open(file_name)
+    input_data = open(file_name)
     res = 0
 
     return res
 
 
 def part_two(file_name: str) -> int:
-    input = open(file_name)
+    input_data = open(file_name)
     res = 0
 
     return res
