@@ -23,16 +23,16 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from utils.utils import (  # NOQA
     execute_with_runtime,
-    parse_input_without_trailing_and_leading_whitespace,
+    parse_input,
     parse_lines,
-    parse_ints,
-    parse_2d_grid,
+    parse_list_of_ints,
+    parse_2d_grid_strs,
     calculate_manhattan_distance,
 )
 
 
 def part_one(file_name: str) -> int:
-    data = parse_input_without_trailing_and_leading_whitespace(file_name)
+    data = parse_input(file_name)
     res = 0
 
     # Find 1-3 digits separated by a comma.
@@ -45,7 +45,7 @@ def part_one(file_name: str) -> int:
 
 
 def part_two(file_name: str) -> int:
-    data = parse_input_without_trailing_and_leading_whitespace(file_name)
+    data = parse_input(file_name)
     res = 0
 
     # 'mul' instructions are enabled at the start.

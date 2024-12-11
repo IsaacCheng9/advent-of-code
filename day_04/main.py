@@ -23,16 +23,16 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from utils.utils import (  # NOQA
     execute_with_runtime,
-    parse_input_without_trailing_and_leading_whitespace,
+    parse_input,
     parse_lines,
-    parse_ints,
-    parse_2d_grid,
+    parse_list_of_ints,
+    parse_2d_grid_strs,
     calculate_manhattan_distance,
 )
 
 
 def part_one(file_name: str) -> int:
-    grid = parse_2d_grid(file_name)
+    grid = parse_2d_grid_strs(file_name)
     pattern = "XMAS"
     rows = len(grid)
     cols = len(grid[0])
@@ -104,7 +104,7 @@ def part_two(file_name: str) -> int:
         # Check if both diagonals are valid
         return diag1 in valid_patterns and diag2 in valid_patterns
 
-    grid = parse_2d_grid(file_name)
+    grid = parse_2d_grid_strs(file_name)
     rows = len(grid)
     cols = len(grid[0])
     res = 0
