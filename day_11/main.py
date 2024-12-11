@@ -33,38 +33,7 @@ from utils.utils import (  # NOQA
 
 
 def part_one(file_name: str) -> int:
-    input_data = parse_input(file_name)
-    stones = [int(stone) for stone in input_data.split()]
-
-    # Blink 25 times, and track the next stones in a separate array so we can
-    # update the original array after each iteration.
-    for _ in range(25):
-        next_stones = []
-
-        for stone in stones:
-            # If the stone is 0, it's replaced by 1 in the next iteration.
-            if stone == 0:
-                next_stones.append(1)
-                continue
-
-            str_stone = str(stone)
-            length = len(str_stone)
-            mid = length // 2
-            # If there are an even number of digits, split the stone in half.
-            if length % 2 == 0:
-                next_stones.append(int(str_stone[:mid]))
-                next_stones.append(int(str_stone[mid:]))
-            # Otherwise, multiply the stone by 2024.
-            else:
-                next_stones.append(stone * 2024)
-
-        # Update the original stones array with the latest computed stones.
-        stones = next_stones
-
-    return len(stones)
-
-
-def part_two(file_name: str) -> int:
+    # Use memoisation to avoid recomputing the same stone-step combinations.
     @cache
     def count_stones(stone, steps):
         # If no steps remain, we have one stone.
@@ -88,7 +57,36 @@ def part_two(file_name: str) -> int:
 
     input_data = parse_input(file_name)
     stones = [int(stone) for stone in input_data.split()]
+    # Sum the count for each stone after 25Z steps.
+    return sum(count_stones(stone, 25) for stone in stones)
 
+
+def part_two(file_name: str) -> int:
+    # Use memoisation to avoid recomputing the same stone-step combinations.
+    @cache
+    def count_stones(stone, num_steps):
+        # If no steps remain, we have one stone.
+        if num_steps == 0:
+            return 1
+        # If the stone is 0, it's replaced by 1 in the next iteration.
+        elif stone == 0:
+            return count_stones(1, num_steps - 1)
+
+        str_stone = str(stone)
+        length = len(str_stone)
+        mid = length // 2
+        # If there are an even number of digits, split the stone in half and
+        # count both halves.
+        if length % 2 == 0:
+            return count_stones(int(str_stone[:mid]), num_steps - 1) + count_stones(
+                int(str_stone[mid:]), num_steps - 1
+            )
+        # Otherwise, multiply the stone by 2024 and continue counting.
+        return count_stones(stone * 2024, num_steps - 1)
+
+    input_data = parse_input(file_name)
+    stones = [int(stone) for stone in input_data.split()]
+    # Sum the count for each stone after 75 steps.
     return sum(count_stones(stone, 75) for stone in stones)
 
 
