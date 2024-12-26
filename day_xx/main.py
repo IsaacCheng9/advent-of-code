@@ -2,32 +2,35 @@
 Advent of Code solution template with enhanced utilities.
 """
 
-import os  # NOQA
-from pathlib import Path
-import sys  # NOQA
-import re  # NOQA
-import math  # NOQA
-import fileinput  # NOQA
-from string import ascii_uppercase, ascii_lowercase  # NOQA
-from collections import Counter, defaultdict, deque, namedtuple  # NOQA
-from itertools import (  # NOQA
-    count,  # NOQA
-    product,  # NOQA
-    permutations,  # NOQA
-    combinations,  # NOQA
-    combinations_with_replacement,  # NOQA
+import fileinput  # noqa
+import heapq  # noqa
+import math  # noqa
+import os  # noqa
+import re  # noqa
+import sys  # noqa
+from collections import Counter, defaultdict, deque, namedtuple  # noqa
+from functools import cache  # noqa
+from itertools import (  # noqa
+    combinations,
+    combinations_with_replacement,
+    count,
+    permutations,
+    product,
 )
+from math import gcd, lcm  # noqa
+from pathlib import Path  # noqa
+from string import ascii_lowercase, ascii_uppercase  # noqa
 
 # Add the parent directory to the PYTHONPATH.
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from utils.utils import (  # NOQA
+from utils.utils import (
+    calculate_manhattan_distance,
     execute_with_runtime,
+    parse_2d_grid_strs,
     parse_input,
     parse_lines,
     parse_list_of_ints,
-    parse_2d_grid_strs,
-    calculate_manhattan_distance,
 )
 
 
