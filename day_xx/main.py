@@ -17,6 +17,7 @@ from itertools import (  # noqa
     permutations,
     product,
 )
+from bisect import bisect_left, bisect_right  # noqa
 from math import gcd, lcm  # noqa
 from pathlib import Path  # noqa
 from string import ascii_lowercase, ascii_uppercase  # noqa
@@ -34,18 +35,12 @@ from utils.utils import (
 )
 
 
-def part_one(file_name: str) -> int:
+def part_one(file_name: str):
     input_data = parse_input(file_name)
-    res = 0
-
-    return res
 
 
-def part_two(file_name: str) -> int:
+def part_two(file_name: str):
     input_data = parse_input(file_name)
-    res = 0
-
-    return res
 
 
 if __name__ == "__main__":
