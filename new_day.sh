@@ -38,10 +38,6 @@ mv "${TEMP_PROBLEM}" "$DIR/problem.txt"
 
 # Get the input and save to input.txt for the day
 INPUT_URL="$PROBLEM_URL/input"
-TEMP_INPUT="temp-input.txt"
 curl "${INPUT_URL}" --compressed -f \
   -H "Cookie: session=${COOKIE}" \
-  -o "${TEMP_INPUT}"
-
-cp "${TEMP_INPUT}" "$DIR/input.txt"
-rm "${TEMP_INPUT}"
+  -o "$DIR/input.txt"
