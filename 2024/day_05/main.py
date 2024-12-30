@@ -28,7 +28,7 @@ from utils.utils import (  # noqa
 )
 
 
-def part_one(file_name: str) -> int:
+def part_one(input_file: str) -> int:
     def is_ordered(update):
         # For every pair in the update list, check if the ordering rule is
         # valid. Return False if any rule is invalid.
@@ -43,7 +43,7 @@ def part_one(file_name: str) -> int:
                     return False
         return True
 
-    data = open(file_name)
+    data = open(input_file)
     # The first block contains the page ordering rules, and the second block
     # contains the page update numbers.
     page_ordering_rules, page_update_nums = data.read().split("\n\n")
@@ -70,7 +70,7 @@ def part_one(file_name: str) -> int:
     return total_sum
 
 
-def part_two(file_name: str) -> int:
+def part_two(input_file: str) -> int:
     def is_ordered(update):
         # For every pair in the update list, check if the ordering rule is
         # valid. Return False if any rule is invalid.
@@ -94,7 +94,7 @@ def part_two(file_name: str) -> int:
             return 1
         return 0
 
-    data = open(file_name)
+    data = open(input_file)
     # The first block contains the page ordering rules, and the second block
     # contains the page update numbers.
     page_ordering_rules, page_update_nums = data.read().split("\n\n")

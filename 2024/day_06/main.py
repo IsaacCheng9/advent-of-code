@@ -27,8 +27,8 @@ from utils.utils import (  # noqa
 )
 
 
-def part_one(file_name: str) -> int:
-    grid = parse_2d_grid_strs(file_name)
+def part_one(input_file: str) -> int:
+    grid = parse_2d_grid_strs(input_file)
     rows = len(grid)
     cols = len(grid[0])
 
@@ -70,8 +70,8 @@ def part_one(file_name: str) -> int:
     return len(distinct_positions)
 
 
-def part_two(file_name: str) -> int:
-    grid = parse_2d_grid_strs(file_name)
+def part_two(input_file: str) -> int:
+    grid = parse_2d_grid_strs(input_file)
     rows = len(grid)
     cols = len(grid[0])
 
@@ -126,7 +126,7 @@ def part_two(file_name: str) -> int:
 
 
 # !IMPORTANT: Runs very slowly (~25 seconds instead of 0.003 seconds).
-def part_two_original_bruteforce(file_name: str) -> int:
+def part_two_original_bruteforce(input_file: str) -> int:
     def new_obstruction_creates_a_loop(grid, row, col):
         row_diff = -1
         col_diff = 0
@@ -154,7 +154,7 @@ def part_two_original_bruteforce(file_name: str) -> int:
             if (row, col, row_diff, col_diff) in seen:
                 return True
 
-    grid = parse_2d_grid_strs(file_name)
+    grid = parse_2d_grid_strs(input_file)
     rows = len(grid)
     cols = len(grid[0])
 

@@ -27,8 +27,8 @@ from utils.utils import (  # noqa
 )
 
 
-def part_one(file_name: str) -> int:
-    grid = parse_2d_grid_strs(file_name)
+def part_one(input_file: str) -> int:
+    grid = parse_2d_grid_strs(input_file)
     pattern = "XMAS"
     rows = len(grid)
     cols = len(grid[0])
@@ -67,7 +67,7 @@ def part_one(file_name: str) -> int:
     return res
 
 
-def part_two(file_name: str) -> int:
+def part_two(input_file: str) -> int:
     def check_x_mas(grid, x, y):
         valid_patterns = {"MAS", "SAM"}
         # Check bounds - need 3x3 space for the X pattern
@@ -100,7 +100,7 @@ def part_two(file_name: str) -> int:
         # Check if both diagonals are valid
         return diag1 in valid_patterns and diag2 in valid_patterns
 
-    grid = parse_2d_grid_strs(file_name)
+    grid = parse_2d_grid_strs(input_file)
     rows = len(grid)
     cols = len(grid[0])
     res = 0

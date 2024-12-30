@@ -27,7 +27,7 @@ from utils.utils import (  # noqa
 )
 
 
-def part_one(file_name: str) -> int:
+def part_one(input_file: str) -> int:
     def can_obtain(target: int, array: list[int]) -> bool:
         # Base case: if only one number remains, we can't apply further
         # operations, so check if it equals the target.
@@ -53,7 +53,7 @@ def part_one(file_name: str) -> int:
 
         return False
 
-    input = open(file_name)
+    input = open(input_file)
     total_calibration_result = 0
 
     for line in input:
@@ -69,7 +69,7 @@ def part_one(file_name: str) -> int:
     return total_calibration_result
 
 
-def part_two(file_name: str) -> int:
+def part_two(input_file: str) -> int:
     def can_obtain(target: int, array: list[int]) -> bool:
         # Base case: if only one number remains, we can't apply further
         # operations, so check if it equals the target.
@@ -108,7 +108,7 @@ def part_two(file_name: str) -> int:
 
         return False
 
-    input = open(file_name)
+    input = open(input_file)
     total_calibration_result = 0
 
     for line in input:

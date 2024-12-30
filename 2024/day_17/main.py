@@ -28,7 +28,7 @@ from utils.utils import (  # noqa
 )
 
 
-def part_one(file_name: str) -> str:
+def part_one(input_file: str) -> str:
     def resolve_operand(operand):
         # Operands 0-3 represent the literal value.
         if 0 <= operand <= 3:
@@ -44,7 +44,7 @@ def part_one(file_name: str) -> str:
             return register_c
         raise ValueError("Invalid operand value.")
 
-    input_data = parse_input(file_name)
+    input_data = parse_input(input_file)
     raw_registers, raw_program = input_data.split("\n\n")
     # Get the integer values for each register.
     register_a, register_b, register_c = map(
@@ -103,8 +103,8 @@ def part_one(file_name: str) -> str:
     return ",".join(map(str, outputs))
 
 
-def part_two(file_name: str) -> int:
-    input_data = parse_input(file_name)
+def part_two(input_file: str) -> int:
+    input_data = parse_input(input_file)
     _, raw_program = input_data.split("\n\n")
     # Get the list of integers from the program.
     program = list(map(int, raw_program.split(": ")[1].split(",")))

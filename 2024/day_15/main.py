@@ -27,8 +27,8 @@ from utils.utils import (  # noqa
 )
 
 
-def part_one(file_name: str) -> int:
-    input_data = parse_input(file_name)
+def part_one(input_file: str) -> int:
+    input_data = parse_input(input_file)
     raw_grid, robot_moves = input_data.split("\n\n")
     grid = [list(line) for line in raw_grid.splitlines()]
     ROWS = len(grid)
@@ -106,8 +106,8 @@ def part_one(file_name: str) -> int:
     )
 
 
-def part_two(file_name: str) -> int:
-    input_data = parse_input(file_name)
+def part_two(input_file: str) -> int:
+    input_data = parse_input(input_file)
     raw_grid, robot_moves = input_data.split("\n\n")
     # Create the expanded grid where each cell becomes two cells wide.
     cell_expansion_map = {

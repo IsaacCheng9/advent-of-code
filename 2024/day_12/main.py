@@ -27,7 +27,7 @@ from utils.utils import (  # noqa
 )
 
 
-def part_one(file_name: str) -> int:
+def part_one(input_file: str) -> int:
     def get_perimeter(region: set[tuple[int, int]]) -> int:
         perimeter = 0
 
@@ -44,7 +44,7 @@ def part_one(file_name: str) -> int:
 
         return perimeter
 
-    grid = parse_2d_grid_strs(file_name)
+    grid = parse_2d_grid_strs(input_file)
     rows = len(grid)
     cols = len(grid[0])
     directions = ((-1, 0), (0, -1), (0, 1), (1, 0))
@@ -92,7 +92,7 @@ def part_one(file_name: str) -> int:
     return sum(len(region) * get_perimeter(region) for region in regions)
 
 
-def part_two(file_name: str) -> int:
+def part_two(input_file: str) -> int:
     def get_num_sides(region: set[tuple[int, int]]) -> int:
         # Store the edges and their directions.
         # (row, col): (x_direction_vector, y_direction_vector)
@@ -147,7 +147,7 @@ def part_two(file_name: str) -> int:
 
         return num_sides
 
-    grid = parse_2d_grid_strs(file_name)
+    grid = parse_2d_grid_strs(input_file)
     rows = len(grid)
     cols = len(grid[0])
     directions = ((-1, 0), (0, -1), (0, 1), (1, 0))

@@ -27,8 +27,8 @@ from utils.utils import (  # noqa
 )
 
 
-def part_one(file_name: str) -> int:
-    data = parse_input(file_name)
+def part_one(input_file: str) -> int:
+    data = parse_input(input_file)
     res = 0
 
     # Find 1-3 digits separated by a comma.
@@ -40,8 +40,8 @@ def part_one(file_name: str) -> int:
     return res
 
 
-def part_two(file_name: str) -> int:
-    data = parse_input(file_name)
+def part_two(input_file: str) -> int:
+    data = parse_input(input_file)
     res = 0
 
     # 'mul' instructions are enabled at the start.

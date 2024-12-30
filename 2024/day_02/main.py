@@ -27,14 +27,14 @@ from utils.utils import (  # noqa
 )
 
 
-def part_one(file_name: str) -> int:
+def part_one(input_file: str) -> int:
     def is_safe(levels):
         diffs = [x - y for x, y in zip(levels, levels[1:])]
         return all(1 <= x <= 3 for x in diffs) or all(-1 >= x >= -3 for x in diffs)
 
     res = 0
 
-    for report in open(file_name):
+    for report in open(input_file):
         levels = list(map(int, report.split()))
         if is_safe(levels):
             res += 1
@@ -42,14 +42,14 @@ def part_one(file_name: str) -> int:
     return res
 
 
-def part_two(file_name: str) -> int:
+def part_two(input_file: str) -> int:
     def is_safe(levels):
         diffs = [x - y for x, y in zip(levels, levels[1:])]
         return all(1 <= x <= 3 for x in diffs) or all(-1 >= x >= -3 for x in diffs)
 
     res = 0
 
-    for report in open(file_name):
+    for report in open(input_file):
         levels = list(map(int, report.split()))
         n = len(levels)
         if any(is_safe(levels[:index] + levels[index + 1 :]) for index in range(n)):

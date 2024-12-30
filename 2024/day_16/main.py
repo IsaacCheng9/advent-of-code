@@ -28,8 +28,8 @@ from utils.utils import (  # noqa
 )
 
 
-def part_one(file_name: str) -> int:
-    grid = parse_2d_grid_strs(file_name)
+def part_one(input_file: str) -> int:
+    grid = parse_2d_grid_strs(input_file)
     ROWS = len(grid)
     COLS = len(grid[0])
 
@@ -82,8 +82,8 @@ def part_one(file_name: str) -> int:
     return cost
 
 
-def part_two(file_name: str) -> int:
-    grid = parse_2d_grid_strs(file_name)
+def part_two(input_file: str) -> int:
+    grid = parse_2d_grid_strs(input_file)
     ROWS = len(grid)
     COLS = len(grid[0])
 

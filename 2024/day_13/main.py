@@ -28,8 +28,8 @@ from utils.utils import (  # noqa
 
 
 # Takes ~200x longer than the optimised solution - measured 135ms vs 0.7ms.
-def part_one_bruteforce(file_name: str) -> int:
-    input_data = parse_input(file_name)
+def part_one_bruteforce(input_file: str) -> int:
+    input_data = parse_input(input_file)
     blocks = input_data.split("\n\n")
     num_tokens: int = 0
 
@@ -59,8 +59,8 @@ def part_one_bruteforce(file_name: str) -> int:
     return num_tokens
 
 
-def part_one(file_name: str) -> int:
-    input_data = parse_input(file_name)
+def part_one(input_file: str) -> int:
+    input_data = parse_input(input_file)
     blocks = input_data.split("\n\n")
     num_tokens = 0
 
@@ -101,8 +101,8 @@ def part_one(file_name: str) -> int:
     return num_tokens
 
 
-def part_two(file_name: str) -> int:
-    input_data = parse_input(file_name)
+def part_two(input_file: str) -> int:
+    input_data = parse_input(input_file)
     blocks = input_data.split("\n\n")
     num_tokens = 0
 

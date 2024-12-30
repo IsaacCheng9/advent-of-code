@@ -28,7 +28,7 @@ from utils.utils import (  # noqa
 )
 
 
-def part_one(file_name: str) -> int:
+def part_one(input_file: str) -> int:
     # Use memoisation to avoid recomputing the same stone-step combinations.
     @cache
     def count_stones(stone, steps):
@@ -51,13 +51,13 @@ def part_one(file_name: str) -> int:
         # Otherwise, multiply the stone by 2024 and continue counting.
         return count_stones(stone * 2024, steps - 1)
 
-    input_data = parse_input(file_name)
+    input_data = parse_input(input_file)
     stones = [int(stone) for stone in input_data.split()]
     # Sum the count for each stone after 25Z steps.
     return sum(count_stones(stone, 25) for stone in stones)
 
 
-def part_two(file_name: str) -> int:
+def part_two(input_file: str) -> int:
     # Use memoisation to avoid recomputing the same stone-step combinations.
     @cache
     def count_stones(stone, num_steps):
@@ -80,7 +80,7 @@ def part_two(file_name: str) -> int:
         # Otherwise, multiply the stone by 2024 and continue counting.
         return count_stones(stone * 2024, num_steps - 1)
 
-    input_data = parse_input(file_name)
+    input_data = parse_input(input_file)
     stones = [int(stone) for stone in input_data.split()]
     # Sum the count for each stone after 75 steps.
     return sum(count_stones(stone, 75) for stone in stones)

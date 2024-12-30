@@ -27,8 +27,8 @@ from utils.utils import (  # noqa
 )
 
 
-def part_one(file_name: str) -> int:
-    with open(file_name) as file:
+def part_one(input_file: str) -> int:
+    with open(input_file) as file:
         data = file.read().splitlines()
 
     pairs = [list(map(int, line.split())) for line in data]
@@ -39,8 +39,8 @@ def part_one(file_name: str) -> int:
     return total_distance_diff
 
 
-def part_two(file_name: str) -> int:
-    with open(file_name) as file:
+def part_two(input_file: str) -> int:
+    with open(input_file) as file:
         data = file.read().splitlines()
 
     pairs = [list(map(int, line.split())) for line in data]

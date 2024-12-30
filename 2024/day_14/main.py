@@ -27,8 +27,8 @@ from utils.utils import (  # noqa
 )
 
 
-def part_one(file_name: str) -> int:
-    input_data = parse_lines(file_name)
+def part_one(input_file: str) -> int:
+    input_data = parse_lines(input_file)
     GRID_ROWS = 103
     GRID_COLS = 101
     MIDDLE_ROW = (GRID_ROWS - 1) // 2
@@ -76,8 +76,8 @@ def part_one(file_name: str) -> int:
     return top_left * bottom_left * top_right * bottom_right
 
 
-def part_two(file_name: str) -> int:
-    input_data = parse_lines(file_name)
+def part_two(input_file: str) -> int:
+    input_data = parse_lines(input_file)
     ROWS = 103
     COLS = 101
     MIDDLE_ROW = (ROWS - 1) // 2

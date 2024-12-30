@@ -29,12 +29,12 @@ from utils.utils import (  # noqa
 )
 
 
-def part_one(file_name: str) -> int:
+def part_one(input_file: str) -> int:
     # Simulate the first 1024 bytes falling onto the memory space represented
     # by a 2D grid with coordinates 0 to 70.
     GRID_SIZE = 70
     NUM_BYTES = 1024
-    input_data = parse_lines(file_name)
+    input_data = parse_lines(input_file)
     # Create a list of tuples from the input lines.
     coordinates = [tuple(map(int, line.split(","))) for line in input_data]
     # Bytes can move left, up, down, or right.
@@ -83,7 +83,7 @@ def part_one(file_name: str) -> int:
     raise ValueError("No path to the exit found.")
 
 
-def part_two(file_name: str) -> str:
+def part_two(input_file: str) -> str:
     def has_path_to_exit(byte_count):
         # Create a 2D grid with dimensions (GRID_SIZE + 1) * (GRID_SIZE + 1).
         # 0s represent safe spaces, and 1s represent corrupted memory.
@@ -128,7 +128,7 @@ def part_two(file_name: str) -> str:
         return False
 
     GRID_SIZE = 70
-    input_data = parse_lines(file_name)
+    input_data = parse_lines(input_file)
     # Create a list of tuples from the input lines.
     coordinates = [tuple(map(int, line.split(","))) for line in input_data]
     # Bytes can move left, up, down, or right.

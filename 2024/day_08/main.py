@@ -27,8 +27,8 @@ from utils.utils import (  # noqa
 )
 
 
-def part_one(file_name: str) -> int:
-    grid = parse_2d_grid_strs(file_name)
+def part_one(input_file: str) -> int:
+    grid = parse_2d_grid_strs(input_file)
     rows = len(grid)
     cols = len(grid[0])
 
@@ -64,8 +64,8 @@ def part_one(file_name: str) -> int:
     return len(valid_antinodes)
 
 
-def part_two(file_name: str) -> int:
-    grid = parse_2d_grid_strs(file_name)
+def part_two(input_file: str) -> int:
+    grid = parse_2d_grid_strs(input_file)
     rows = len(grid)
     cols = len(grid[0])
 

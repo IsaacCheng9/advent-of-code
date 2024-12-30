@@ -28,7 +28,7 @@ from utils.utils import (  # noqa
 )
 
 
-def part_one(file_name: str) -> int:
+def part_one(input_file: str) -> int:
     def bfs(row, col):
         # Initialise the starting position and track seen positions so we don't
         # revisit them.
@@ -64,7 +64,7 @@ def part_one(file_name: str) -> int:
 
         return num_summits
 
-    grid = parse_2d_grid_ints(file_name)
+    grid = parse_2d_grid_ints(input_file)
     rows = len(grid)
     cols = len(grid[0])
     directions = [(-1, 0), (0, -1), (0, 1), (1, 0)]
@@ -80,7 +80,7 @@ def part_one(file_name: str) -> int:
     return total_summits
 
 
-def part_two(file_name: str) -> int:
+def part_two(input_file: str) -> int:
     def bfs(row, col):
         # Initialise the starting position and track the number of trails that
         # lead to each summit.
@@ -117,7 +117,7 @@ def part_two(file_name: str) -> int:
 
         return num_trails
 
-    grid = parse_2d_grid_ints(file_name)
+    grid = parse_2d_grid_ints(input_file)
     rows = len(grid)
     cols = len(grid[0])
     directions = [(-1, 0), (0, -1), (0, 1), (1, 0)]

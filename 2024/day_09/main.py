@@ -27,8 +27,8 @@ from utils.utils import (  # noqa
 )
 
 
-def part_one(file_name: str) -> int:
-    input_data = open(file_name).read().strip()
+def part_one(input_file: str) -> int:
+    input_data = open(input_file).read().strip()
     disk = []
     file_id = 0
 
@@ -64,8 +64,8 @@ def part_one(file_name: str) -> int:
     return sum(index * char for index, char in enumerate(disk))
 
 
-def part_two(file_name: str) -> int:
-    input_data = open(file_name).read().strip()
+def part_two(input_file: str) -> int:
+    input_data = open(input_file).read().strip()
     # Track file positions and lengths for each file ID.
     # {file_id: (position, length)}
     files = {}
