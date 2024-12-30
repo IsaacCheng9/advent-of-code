@@ -28,10 +28,9 @@ from utils.utils import (  # noqa
 
 
 def part_one(input_file: str) -> int:
-    with open(input_file) as file:
-        data = file.read().splitlines()
+    lines = parse_lines(input_file)
+    pairs = [list(map(int, line.split())) for line in lines]
 
-    pairs = [list(map(int, line.split())) for line in data]
     left_nums = sorted([pair[0] for pair in pairs])
     right_nums = sorted([pair[1] for pair in pairs])
     total_distance_diff = sum(abs(a - b) for a, b in zip(left_nums, right_nums))
@@ -40,10 +39,9 @@ def part_one(input_file: str) -> int:
 
 
 def part_two(input_file: str) -> int:
-    with open(input_file) as file:
-        data = file.read().splitlines()
+    lines = parse_lines(input_file)
 
-    pairs = [list(map(int, line.split())) for line in data]
+    pairs = [list(map(int, line.split())) for line in lines]
     left_nums = [pair[0] for pair in pairs]
     right_nums = [pair[1] for pair in pairs]
     right_counter = Counter(right_nums)

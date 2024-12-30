@@ -28,14 +28,14 @@ from utils.utils import (  # noqa
 
 
 def part_one(input_file: str) -> int:
-    input_data = open(input_file).read().strip()
+    input_str = parse_input(input_file)
     disk = []
     file_id = 0
 
     # Parse input string where even indices are file lengths and odd indices
     # are space lengths (e.g. : '2333' means 2 blocks of file ID 0, 3 spaces,
     # 3 blocks of file ID 1, 3 spaces).
-    for index, char in enumerate(input_data):
+    for index, char in enumerate(input_str):
         length = int(char)
         # At even indices, add the file IDs to the disk.
         if index % 2 == 0:
@@ -65,7 +65,7 @@ def part_one(input_file: str) -> int:
 
 
 def part_two(input_file: str) -> int:
-    input_data = open(input_file).read().strip()
+    input_str = parse_input(input_file)
     # Track file positions and lengths for each file ID.
     # {file_id: (position, length)}
     files = {}
@@ -78,7 +78,7 @@ def part_two(input_file: str) -> int:
     # Parse input string where even indices are file lengths and odd indices
     # are space lengths (e.g. : '2333' means 2 blocks of file ID 0, 3 spaces,
     # 3 blocks of file ID 1, 3 spaces).
-    for index, char in enumerate(input_data):
+    for index, char in enumerate(input_str):
         length = int(char)
         # At even indices, store the file position and length.
         if index % 2 == 0:

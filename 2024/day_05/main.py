@@ -43,10 +43,10 @@ def part_one(input_file: str) -> int:
                     return False
         return True
 
-    data = open(input_file)
+    data = parse_input(input_file)
     # The first block contains the page ordering rules, and the second block
     # contains the page update numbers.
-    page_ordering_rules, page_update_nums = data.read().split("\n\n")
+    page_ordering_rules, page_update_nums = data.split("\n\n")
     # Split the rules and updates into lists so we can iterate over them.
     page_ordering_rules = page_ordering_rules.strip().split("\n")
     page_update_nums = page_update_nums.strip().split("\n")
@@ -94,10 +94,10 @@ def part_two(input_file: str) -> int:
             return 1
         return 0
 
-    data = open(input_file)
+    data = parse_input(input_file)
     # The first block contains the page ordering rules, and the second block
     # contains the page update numbers.
-    page_ordering_rules, page_update_nums = data.read().split("\n\n")
+    page_ordering_rules, page_update_nums = data.split("\n\n")
     # Split the rules and updates into lists so we can iterate over them.
     page_ordering_rules = page_ordering_rules.strip().split("\n")
     page_update_nums = page_update_nums.strip().split("\n")

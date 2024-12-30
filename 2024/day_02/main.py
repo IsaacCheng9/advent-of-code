@@ -33,8 +33,9 @@ def part_one(input_file: str) -> int:
         return all(1 <= x <= 3 for x in diffs) or all(-1 >= x >= -3 for x in diffs)
 
     res = 0
+    reports = parse_lines(input_file)
 
-    for report in open(input_file):
+    for report in reports:
         levels = list(map(int, report.split()))
         if is_safe(levels):
             res += 1
@@ -48,8 +49,9 @@ def part_two(input_file: str) -> int:
         return all(1 <= x <= 3 for x in diffs) or all(-1 >= x >= -3 for x in diffs)
 
     res = 0
+    reports = parse_lines(input_file)
 
-    for report in open(input_file):
+    for report in reports:
         levels = list(map(int, report.split()))
         n = len(levels)
         if any(is_safe(levels[:index] + levels[index + 1 :]) for index in range(n)):

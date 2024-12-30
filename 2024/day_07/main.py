@@ -53,10 +53,10 @@ def part_one(input_file: str) -> int:
 
         return False
 
-    input = open(input_file)
+    lines = parse_lines(input_file)
     total_calibration_result = 0
 
-    for line in input:
+    for line in lines:
         # The left number is the target, and the right numbers are the array.
         left, right = line.split(": ")
         target = int(left)
@@ -108,10 +108,10 @@ def part_two(input_file: str) -> int:
 
         return False
 
-    input = open(input_file)
+    lines = parse_lines(input_file)
     total_calibration_result = 0
 
-    for line in input:
+    for line in lines:
         # The left number is the target, and the right numbers are the array.
         left, right = line.split(": ")
         target = int(left)
