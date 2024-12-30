@@ -1,25 +1,25 @@
-import heapq  # NOQA
-import os  # NOQA
+import heapq  # noqa
+import os  # noqa
 from pathlib import Path
-import sys  # NOQA
-import re  # NOQA
-import math  # NOQA
-import fileinput  # NOQA
-from bisect import bisect_left  # NOQA
-from string import ascii_uppercase, ascii_lowercase  # NOQA
-from collections import Counter, defaultdict, deque, namedtuple  # NOQA
-from itertools import (  # NOQA
-    count,  # NOQA
-    product,  # NOQA
-    permutations,  # NOQA
-    combinations,  # NOQA
-    combinations_with_replacement,  # NOQA
+import sys  # noqa
+import re  # noqa
+import math  # noqa
+import fileinput  # noqa
+from bisect import bisect_left  # noqa
+from string import ascii_uppercase, ascii_lowercase  # noqa
+from collections import Counter, defaultdict, deque, namedtuple  # noqa
+from itertools import (  # noqa
+    count,  # noqa
+    product,  # noqa
+    permutations,  # noqa
+    combinations,  # noqa
+    combinations_with_replacement,  # noqa
 )
 
 # Add the parent directory to the PYTHONPATH.
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from utils.utils import (  # NOQA
+from utils.utils import (  # noqa
     execute_with_runtime,
     parse_input,
     parse_lines,

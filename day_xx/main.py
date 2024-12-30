@@ -21,7 +21,7 @@ from string import ascii_lowercase, ascii_uppercase  # noqa
 # Add the parent directory to the PYTHONPATH.
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from utils.utils import (
+from utils.utils import (  # noqa
     calculate_manhattan_distance,
     execute_with_runtime,
     parse_2d_grid_strs,
