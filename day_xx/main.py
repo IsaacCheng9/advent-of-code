@@ -1,7 +1,3 @@
-"""
-Advent of Code solution template with enhanced utilities.
-"""
-
 import fileinput  # noqa
 import heapq  # noqa
 import math  # noqa

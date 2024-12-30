@@ -1,7 +1,3 @@
-"""
-Advent of Code solution template with enhanced utilities.
-"""
-
 import os  # NOQA
 from pathlib import Path
 import sys  # NOQA
