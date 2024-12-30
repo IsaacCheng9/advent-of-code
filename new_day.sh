@@ -1,14 +1,15 @@
 COOKIE_FILE=".config/cookie"
 if [ ! -f "$COOKIE_FILE" ]; then
-    echo "Error: Cookie file not found at $COOKIE_FILE"
-    exit 1
+  echo "Error: Cookie file not found at $COOKIE_FILE"
+  exit 1
 fi
 
 # Setup day info
 DAY_PADDED=$(date +%d)
-DIR="day_$DAY_PADDED"
 YEAR=$(date +%Y)
 DAY=$(date +%-d)
+YEAR_DIR="$YEAR"
+DIR="$YEAR_DIR/day_$DAY_PADDED"
 COOKIE="$(< "$COOKIE_FILE" tr -d '\n')"
 
 # First check if we can get the problem description
@@ -24,10 +25,13 @@ curl "${PROBLEM_URL}" --compressed -f \
 
 # Check if problem description was fetched successfully
 if [ ! -s "${TEMP_PROBLEM}" ]; then
-    echo "Error: Could not fetch problem description. Problem may not be released yet."
-    rm "${TEMP_PROBLEM}"
-    exit 1
+  echo "Error: Could not fetch problem description. Problem may not be released yet."
+  rm "${TEMP_PROBLEM}"
+  exit 1
 fi
+
+# Create year directory if it doesn't exist
+mkdir -p "$YEAR_DIR"
 
 # If we get here, the problem exists, so create the directory and files
 cp -r "day_xx" "$DIR"
