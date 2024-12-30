@@ -30,11 +30,8 @@ if [ ! -s "${TEMP_PROBLEM}" ]; then
   exit 1
 fi
 
-# Create year directory if it doesn't exist
-mkdir -p "$YEAR_DIR"
-
 # If we get here, the problem exists, so create the directory and files
-cp -r "day_xx" "$DIR"
+cp -r "$YEAR_DIR/day_xx" "$DIR"
 sed -i '' "s/day_xx/$DIR/g" "$DIR/main.py"
 
 # Move problem description to final location
