@@ -52,7 +52,29 @@ def part_one(input_file: str):
 
 
 def part_two(input_file: str):
-    input_data = parse_input(input_file)
+    input_data = parse_lines(input_file)
+    num_zeroes = 0
+    cur_rotation = 50
+
+    for line in input_data:
+        direction = line[0]
+        distance = int(line[1:])
+
+        if direction == "L":
+            if cur_rotation == 0:
+                num_zeroes += distance // 100
+            else:
+                raw_rotation = cur_rotation - distance
+                if raw_rotation == 0:
+                    num_zeroes += 1
+                elif raw_rotation < 0:
+                    num_zeroes += (distance + 100 - cur_rotation) // 100
+            cur_rotation = (cur_rotation - distance) % 100
+        else:
+            num_zeroes += (cur_rotation + distance) // 100
+            cur_rotation = (cur_rotation + distance) % 100
+
+    return num_zeroes
 
 
 if __name__ == "__main__":
