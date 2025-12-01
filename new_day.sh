@@ -17,11 +17,40 @@ PROBLEM_URL="https://adventofcode.com/$YEAR/day/$DAY"
 TEMP_PROBLEM="temp-problem.txt"
 
 curl "${PROBLEM_URL}" --compressed -f \
-  -H "Cookie: session=${COOKIE}" \
-  | grep -A999999 "<article class=\"day-desc\">" \
-  | grep -B999999 "</article>" \
-  | sed 's/<[^>]*>//g' \
-  > "${TEMP_PROBLEM}"
+  -H "Cookie: session=${COOKIE}" | python3 -c "
+import sys
+from html.parser import HTMLParser
+
+class AoC(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.capture = False
+        self.skip = False
+        self.data = []
+    
+    def handle_starttag(self, tag, attrs):
+        if tag == 'article':
+            for k, v in attrs:
+                if k == 'class' and v and 'day-desc' in v:
+                    self.capture = True
+        elif tag in ('style', 'script'):
+            self.skip = True
+            
+    def handle_endtag(self, tag):
+        if tag == 'article':
+            self.capture = False
+            self.data.append('\n')
+        elif tag in ('style', 'script'):
+            self.skip = False
+            
+    def handle_data(self, data):
+        if self.capture and not self.skip:
+            self.data.append(data)
+
+p = AoC()
+p.feed(sys.stdin.read())
+print(''.join(p.data).strip())
+" > "${TEMP_PROBLEM}"
 
 # Check if problem description was fetched successfully
 if [ ! -s "${TEMP_PROBLEM}" ]; then
@@ -31,8 +60,28 @@ if [ ! -s "${TEMP_PROBLEM}" ]; then
 fi
 
 # If we get here, the problem exists, so create the directory and files
-cp -r "$YEAR_DIR/day_xx" "$DIR"
-sed -i '' "s/day_xx/$DIR/g" "$DIR/main.py"
+TEMPLATE_DIR="day_xx"
+if [ ! -d "$TEMPLATE_DIR" ]; then
+    # Fallback to previous year's template if root template not found
+    if [ -d "2024/day_xx" ]; then
+        TEMPLATE_DIR="2024/day_xx"
+    else
+        echo "Error: Template day_xx not found."
+        rm "${TEMP_PROBLEM}"
+        exit 1
+    fi
+fi
+
+mkdir -p "$DIR"
+
+# Ensure utils exist for the new year
+if [ ! -d "$YEAR_DIR/utils" ] && [ -d "2024/utils" ]; then
+    echo "Copying utils from 2024..."
+    cp -r "2024/utils" "$YEAR_DIR/"
+fi
+
+cp -r "$TEMPLATE_DIR/"* "$DIR/"
+sed -i '' "s|day_xx|$DIR|g" "$DIR/main.py"
 
 # Move problem description to final location
 mv "${TEMP_PROBLEM}" "$DIR/problem.txt"
