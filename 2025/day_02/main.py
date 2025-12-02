@@ -57,12 +57,13 @@ def part_one(input_file: str):
         cur_lower *= 10
         cur_upper = (cur_upper * 10) + 9
 
+    repeated_ids = sorted(repeated_ids)
     invalid_ids = set()
     for bounds in id_ranges:
         lower, upper = map(int, bounds.split("-"))
-        for repeated_id in repeated_ids:
-            if lower <= repeated_id <= upper:
-                invalid_ids.add(repeated_id)
+        start_idx = bisect_left(repeated_ids, lower)
+        end_idx = bisect_right(repeated_ids, upper)
+        invalid_ids.update(repeated_ids[start_idx:end_idx])
 
     return sum(invalid_ids)
 
@@ -92,12 +93,13 @@ def part_two(input_file: str):
         cur_lower *= 10
         cur_upper = (cur_upper * 10) + 9
 
+    repeated_ids = sorted(repeated_ids)
     invalid_ids = set()
     for bounds in id_ranges:
         lower, upper = map(int, bounds.split("-"))
-        for repeated_id in repeated_ids:
-            if lower <= repeated_id <= upper:
-                invalid_ids.add(repeated_id)
+        start_idx = bisect_left(repeated_ids, lower)
+        end_idx = bisect_right(repeated_ids, upper)
+        invalid_ids.update(repeated_ids[start_idx:end_idx])
 
     return sum(invalid_ids)
 
