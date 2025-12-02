@@ -59,9 +59,7 @@ def part_one(input_file: str):
 
     invalid_ids = set()
     for bounds in id_ranges:
-        lower, upper = bounds.split("-")
-        lower = int(lower)
-        upper = int(upper)
+        lower, upper = map(int, bounds.split("-"))
         for repeated_id in repeated_ids:
             if lower <= repeated_id <= upper:
                 invalid_ids.add(repeated_id)
@@ -71,6 +69,37 @@ def part_one(input_file: str):
 
 def part_two(input_file: str):
     input_data = parse_input(input_file)
+    id_ranges = input_data.split(",")
+    max_id = 0
+
+    for bounds in id_ranges:
+        _, upper = bounds.split("-")
+        max_id = max(max_id, int(upper))
+
+    repeated_ids = set()
+    cur_lower = 1
+    cur_upper = 9
+
+    while int(str(cur_lower) * 2) <= max_id:
+        for cur_digit in range(cur_lower, cur_upper + 1):
+            repeated_id = cur_digit
+            while True:
+                repeated_id = int(str(repeated_id) + str(cur_digit))
+                if repeated_id > max_id:
+                    break
+                repeated_ids.add(repeated_id)
+
+        cur_lower *= 10
+        cur_upper = (cur_upper * 10) + 9
+
+    invalid_ids = set()
+    for bounds in id_ranges:
+        lower, upper = map(int, bounds.split("-"))
+        for repeated_id in repeated_ids:
+            if lower <= repeated_id <= upper:
+                invalid_ids.add(repeated_id)
+
+    return sum(invalid_ids)
 
 
 if __name__ == "__main__":
