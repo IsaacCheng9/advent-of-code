@@ -58,7 +58,34 @@ def part_one(input_file: str):
 
 
 def part_two(input_file: str):
-    input_data = parse_input(input_file)
+    input_data = parse_lines(input_file)
+    total_voltage = 0
+
+    for line in input_data:
+        length = len(line)
+        voltage = []
+        start_index = 0
+
+        for _ in range(12):
+            cur_max = "0"
+            max_index = start_index
+            # Ensure we have enough digits to form a 12-digit number.
+            digits_needed = 12 - len(voltage)
+            end_index = length - digits_needed + 1
+
+            # Find the max digit in the remaining digits.
+            for index in range(start_index, end_index):
+                if line[index] > cur_max:
+                    cur_max = line[index]
+                    max_index = index
+
+            voltage.append(cur_max)
+            # Move past the selected digit for the next iteration.
+            start_index = max_index + 1
+
+        total_voltage += int("".join(voltage))
+
+    return total_voltage
 
 
 if __name__ == "__main__":
