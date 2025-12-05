@@ -35,8 +35,6 @@ def part_one(input_file: str):
     data = parse_2d_grid_strs(input_file)
     NUM_ROWS = len(data)
     NUM_COLS = len(data[0])
-
-    res = 0
     adj_offsets = [
         (-1, -1),
         (-1, 0),
@@ -47,6 +45,7 @@ def part_one(input_file: str):
         (1, 0),
         (1, 1),
     ]
+    res = 0
 
     for row_num, row in enumerate(data):
         for col_num, val in enumerate(row):
@@ -70,7 +69,50 @@ def part_one(input_file: str):
 
 
 def part_two(input_file: str):
-    data = parse_input(input_file)
+    data = parse_2d_grid_strs(input_file)
+    NUM_ROWS = len(data)
+    NUM_COLS = len(data[0])
+    adj_offsets = [
+        (-1, -1),
+        (-1, 0),
+        (-1, 1),
+        (0, -1),
+        (0, 1),
+        (1, -1),
+        (1, 0),
+        (1, 1),
+    ]
+
+    num_rolls_removed = 0
+    while True:
+        rolls_to_remove = []
+        for row_num, row in enumerate(data):
+            for col_num, val in enumerate(row):
+                if val != "@":
+                    continue
+
+                num_adj_rolls = 0
+                for row_diff, col_diff in adj_offsets:
+                    new_row = row_num + row_diff
+                    new_col = col_num + col_diff
+                    if new_row not in range(NUM_ROWS) or new_col not in range(NUM_COLS):
+                        continue
+
+                    if data[new_row][new_col] == "@":
+                        num_adj_rolls += 1
+
+                if num_adj_rolls < 4:
+                    rolls_to_remove.append((row_num, col_num))
+
+        if not rolls_to_remove:
+            break
+
+        for row, col in rolls_to_remove:
+            data[row][col] = "x"
+
+        num_rolls_removed += len(rolls_to_remove)
+
+    return num_rolls_removed
 
 
 if __name__ == "__main__":
