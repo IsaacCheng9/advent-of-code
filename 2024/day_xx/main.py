@@ -32,11 +32,11 @@ from utils.utils import (  # noqa
 
 
 def part_one(input_file: str):
-    input_data = parse_input(input_file)
+    data = parse_input(input_file)
 
 
 def part_two(input_file: str):
-    input_data = parse_input(input_file)
+    data = parse_input(input_file)
 
 
 if __name__ == "__main__":
