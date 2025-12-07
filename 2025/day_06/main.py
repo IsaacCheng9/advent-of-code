@@ -40,9 +40,10 @@ def part_one(input_file: str):
     num_cols = df.shape[1]
 
     total = 0
-    for col in range(num_cols):
-        operator = df.iloc[-1, col]
-        nums = df.iloc[:-1, col].astype(int).to_numpy()
+    for col_index in range(num_cols):
+        # Rows 0 to n - 2 are digits, row n - 1 is the operator.
+        operator = df.iloc[-1, col_index]
+        nums = df.iloc[:-1, col_index].astype(int).to_numpy()
         if operator == "+":
             total += nums.sum()
         elif operator == "*":
@@ -52,7 +53,67 @@ def part_one(input_file: str):
 
 
 def part_two(input_file: str):
-    data = parse_input(input_file)
+    """
+    Solves Part 2 by reading the input grid and processing columns right-to-left.
+
+    The input is treated as a 2D grid of characters. We read columns from right
+    to left. Consecutive non-empty columns form a problem. Within each problem,
+    each column represents a number (digits read top-to-bottom) and potentially
+    contains the operator in the last row. We accumulate numbers and the
+    operator, then compute the result when a separator column (all spaces) is
+    encountered.
+
+    Time Complexity: O(R * C) where R is the number of rows and C is the number
+    of columns (characters in the longest line).
+    Space Complexity: O(R * C) to store the grid.
+    """
+    with open(input_file) as file:
+        lines = file.read().splitlines()
+
+    # Pad all lines to the same length.
+    max_len = max(len(line) for line in lines)
+    lines = [line.ljust(max_len) for line in lines]
+
+    grid = [list(line) for line in lines]
+    df = pd.DataFrame(grid)
+    num_cols = df.shape[1]
+
+    total = 0
+    current_nums = []
+    operator = None
+
+    # Read right-to-left.
+    for col_index in range(num_cols - 1, -1, -1):
+        col_values = df.iloc[:, col_index]
+
+        # If it's a separator column, process the problem we've built up.
+        if (col_values == " ").all():
+            if current_nums and operator:
+                if operator == "+":
+                    total += sum(current_nums)
+                elif operator == "*":
+                    total += math.prod(current_nums)
+                current_nums = []
+                operator = None
+            continue
+
+        # Otherwise build up the problem: extract number and operator.
+        # Rows 0 to n - 2 are digits, row n - 1 is the operator.
+        digits = "".join(char for char in col_values.iloc[:-1] if char.strip())
+        operator = col_values.iloc[-1]
+        if digits:
+            current_nums.append(int(digits))
+        if operator in ["+", "*"]:
+            operator = operator
+
+    # Process the last problem (leftmost).
+    if current_nums and operator:
+        if operator == "+":
+            total += sum(current_nums)
+        elif operator == "*":
+            total += math.prod(current_nums)
+
+    return total
 
 
 if __name__ == "__main__":
