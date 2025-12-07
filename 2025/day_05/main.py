@@ -51,6 +51,35 @@ def part_one(input_file: str):
 
 def part_two(input_file: str):
     data = parse_input(input_file)
+    id_ranges, _ = data.split("\n\n")
+    id_ranges = [
+        [int(num) for num in id_range.split("-")] for id_range in id_ranges.splitlines()
+    ]
+
+    num_fresh_ids = 0
+    # Sort the ID range so we can compare adjacent ranges.
+    id_ranges.sort()
+    prev_range = None
+
+    for lower_bound, upper_bound in id_ranges:
+        # First range - set the range for the next iteration.
+        if prev_range is None:
+            prev_range = (lower_bound, upper_bound)
+        # No overlap with the previous range - add the previous range and
+        # set the new range to check in the next iteration.
+        elif prev_range[1] < lower_bound:
+            num_fresh_ids += prev_range[1] - prev_range[0] + 1
+            prev_range = (lower_bound, upper_bound)
+        # Overlaps with the previous range - set the new range as the extended
+        # range.
+        else:
+            prev_range = (prev_range[0], max(prev_range[1], upper_bound))
+
+    # The last range hasn't been added yet, so add it.
+    if prev_range is not None:
+        num_fresh_ids += prev_range[1] - prev_range[0] + 1
+
+    return num_fresh_ids
 
 
 if __name__ == "__main__":
