@@ -5,7 +5,7 @@ import os  # noqa
 import re  # noqa
 import sys  # noqa
 from collections import Counter, defaultdict, deque, namedtuple  # noqa
-from functools import cache  # noqa
+from functools import cache, lru_cache  # noqa
 from itertools import (  # noqa
     combinations,
     combinations_with_replacement,
@@ -65,7 +65,23 @@ def part_one(input_file: str):
 
 
 def part_two(input_file: str):
-    data = parse_input(input_file)
+    grid = parse_2d_grid_strs(input_file)
+    num_rows = len(grid)
+    start = grid[0].index("S")
+
+    # We need to use DFS instead of BFS to avoid running out of memory. Use
+    # memoisation to avoid recomputing the same state.
+    @lru_cache
+    def dfs(row, col):
+        if row == num_rows:
+            return 1
+
+        if grid[row][col] == "." or grid[row][col] == "S":
+            return dfs(row + 1, col)
+        elif grid[row][col] == "^":
+            return dfs(row, col - 1) + dfs(row, col + 1)
+
+    return dfs(0, start)
 
 
 if __name__ == "__main__":
