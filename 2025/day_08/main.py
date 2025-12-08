@@ -102,7 +102,73 @@ def part_one(input_file: str):
 
 
 def part_two(input_file: str):
-    data = parse_input(input_file)
+    def calc_euclidean_distance(
+        box1: tuple[int, int, int], box2: tuple[int, int, int]
+    ) -> float:
+        x1, y1, z1 = box1
+        x2, y2, z2 = box2
+        return math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2 + (z1 - z2) ** 2)
+
+    def u_find(node):
+        while parent[node] != node:
+            parent[node] = parent[parent[node]]
+            node = parent[node]
+        return node
+
+    def u_union(node1, node2):
+        root1 = u_find(node1)
+        root2 = u_find(node2)
+        if root1 == root2:
+            return False
+
+        if rank[root1] > rank[root2]:
+            parent[root2] = root1
+            rank[root1] += rank[root2]
+        else:
+            parent[root1] = root2
+            rank[root2] += rank[root1]
+
+        return True
+
+    data = parse_lines(input_file)
+    coordinates = []
+    for line in data:
+        x, y, z = map(int, line.split(","))
+        coordinates.append((x, y, z))
+    length = len(data)
+
+    # Create a list of edges sorted by Euclidean distance.
+    edges: list[tuple[float, int, int]] = []
+    for node1_index in range(length):
+        for node2_index in range(node1_index + 1, length):
+            if node1_index != node2_index:
+                edges.append(
+                    (
+                        calc_euclidean_distance(
+                            coordinates[node1_index], coordinates[node2_index]
+                        ),
+                        node1_index,
+                        node2_index,
+                    )
+                )
+    edges.sort()
+
+    parent = [node_index for node_index in range(length)]
+    rank = [1] * length
+    num_components = length
+
+    # Use union-find to group connected circuits (components) together
+    # until all components are connected.
+    last_node1, last_node2 = -1, -1
+    index = 0
+    while num_components > 1:
+        _, node1, node2 = edges[index]
+        if u_union(node1, node2):
+            num_components -= 1
+            last_node1, last_node2 = node1, node2
+        index += 1
+
+    return coordinates[last_node1][0] * coordinates[last_node2][0]
 
 
 if __name__ == "__main__":
