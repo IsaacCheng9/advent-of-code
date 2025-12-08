@@ -81,7 +81,7 @@ def part_one(input_file: str):
                         node2_index,
                     )
                 )
-    edges.sort()
+    edges = heapq.nsmallest(1000, edges)
 
     # Use union-find to group connected circuits (components) together.
     parent = [node_index for node_index in range(length)]
