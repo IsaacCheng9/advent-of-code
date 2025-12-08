@@ -8,7 +8,7 @@ import pandas as pd  ## noqa
 import re  # noqa
 import sys  # noqa
 from collections import Counter, defaultdict, deque, namedtuple  # noqa
-from functools import cache  # noqa
+from functools import cache, lru_cache  # noqa
 from itertools import (  # noqa
     combinations,
     combinations_with_replacement,
