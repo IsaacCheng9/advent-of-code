@@ -17,6 +17,7 @@ from bisect import bisect_left, bisect_right  # noqa
 from math import gcd, lcm  # noqa
 from pathlib import Path  # noqa
 from string import ascii_lowercase, ascii_uppercase  # noqa
+from shapely.geometry.polygon import Polygon
 
 # Add the parent directory to the PYTHONPATH.
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -54,7 +55,31 @@ def part_one(input_file: str):
 
 
 def part_two(input_file: str):
-    data = parse_input(input_file)
+    def calculate_area(x1: int, y1: int, x2: int, y2: int) -> int:
+        width = abs(int(x2) - int(x1)) + 1
+        height = abs(int(y2) - int(y1)) + 1
+        return width * height
+
+    def create_rectangle(x1: int, y1: int, x2: int, y2: int) -> Polygon:
+        return Polygon([(x1, y1), (x1, y2), (x2, y2), (x2, y1)])
+
+    data = parse_lines(input_file)
+    lines = []
+    for line in data:
+        x, y = map(int, line.split(","))
+        lines.append((x, y))
+
+    red_green_area = Polygon(lines)
+    max_area = 0
+
+    for coord1 in lines:
+        for coord2 in lines:
+            rectangle = create_rectangle(coord1[0], coord1[1], coord2[0], coord2[1])
+            if red_green_area.contains(rectangle):
+                area = calculate_area(coord1[0], coord1[1], coord2[0], coord2[1])
+                max_area = max(max_area, area)
+
+    return max_area
 
 
 if __name__ == "__main__":
