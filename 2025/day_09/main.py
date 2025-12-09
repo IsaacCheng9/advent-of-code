@@ -63,19 +63,23 @@ def part_two(input_file: str):
     def create_rectangle(x1: int, y1: int, x2: int, y2: int) -> Polygon:
         return Polygon([(x1, y1), (x1, y2), (x2, y2), (x2, y1)])
 
+    # Parse coordinates forming the polygon vertices.
     data = parse_lines(input_file)
-    lines = []
+    vertices = []
     for line in data:
         x, y = map(int, line.split(","))
-        lines.append((x, y))
+        vertices.append((x, y))
 
-    red_green_area = Polygon(lines)
+    # Create the bounding polygon from the ordered vertices.
+    bounding_polygon = Polygon(vertices)
     max_area = 0
 
-    for coord1 in lines:
-        for coord2 in lines:
+    # Try all pairs of vertices as opposite corners of a rectangle.
+    for coord1 in vertices:
+        for coord2 in vertices:
             rectangle = create_rectangle(coord1[0], coord1[1], coord2[0], coord2[1])
-            if red_green_area.contains(rectangle):
+            # Check if the rectangle is fully inside the polygon.
+            if bounding_polygon.contains(rectangle):
                 area = calculate_area(coord1[0], coord1[1], coord2[0], coord2[1])
                 max_area = max(max_area, area)
 
