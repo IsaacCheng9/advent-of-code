@@ -34,6 +34,7 @@ from utils.utils import (  # noqa
 def part_one(input_file: str):
     input_data = parse_lines(input_file)
     num_zeroes = 0
+    # Track rotation in range [0, 99], starting at 50.
     cur_rotation = 50
 
     for line in input_data:
@@ -54,6 +55,7 @@ def part_one(input_file: str):
 def part_two(input_file: str):
     input_data = parse_lines(input_file)
     num_zeroes = 0
+    # Track rotation in range [0, 99], starting at 50.
     cur_rotation = 50
 
     for line in input_data:
@@ -61,12 +63,25 @@ def part_two(input_file: str):
         distance = int(line[1:])
 
         if direction == "L":
+            # Moving left from cur_rotation, we cross 0 at distances:
+            # cur_rotation, cur_rotation + 100, cur_rotation + 200, etc.
+            # Crossings = ((distance - cur_rotation) // 100)) + 1
+            #           = (distance + 100 - cur_rotation) // 100
+            # e.g. from position 50, L150:
+            # (150 + 100 - 50) // 100 = 200 // 100 = 2
+            # Exception: when cur_rotation = 0, we're already at the boundary,
+            # so first crossing is at 100, not 0.
             if cur_rotation == 0:
                 num_zeroes += distance // 100
             elif distance >= cur_rotation:
                 num_zeroes += (distance + 100 - cur_rotation) // 100
             cur_rotation = (cur_rotation - distance) % 100
         else:
+            # Moving right, total position = cur_rotation + distance.
+            # We cross 0 at multiples of 100: 100, 200, 300, etc.
+            # Crossings = (cur_rotation + distance) // 100
+            # Works for all cases: when cur_rotation = 0, we cross at 100,
+            # 200, etc., giving distance // 100
             num_zeroes += (cur_rotation + distance) // 100
             cur_rotation = (cur_rotation + distance) % 100
 
