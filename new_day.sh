@@ -60,16 +60,17 @@ if [ ! -s "${TEMP_PROBLEM}" ]; then
 fi
 
 # If we get here, the problem exists, so create the directory and files
-TEMPLATE_DIR="day_xx"
-if [ ! -d "$TEMPLATE_DIR" ]; then
-    # Fallback to previous year's template if root template not found
-    if [ -d "2024/day_xx" ]; then
-        TEMPLATE_DIR="2024/day_xx"
-    else
-        echo "Error: Template day_xx not found."
-        rm "${TEMP_PROBLEM}"
-        exit 1
-    fi
+# Prioritise current year's template, then root, then previous year
+if [ -d "$YEAR/day_xx" ]; then
+    TEMPLATE_DIR="$YEAR/day_xx"
+elif [ -d "day_xx" ]; then
+    TEMPLATE_DIR="day_xx"
+elif [ -d "$((YEAR - 1))/day_xx" ]; then
+    TEMPLATE_DIR="$((YEAR - 1))/day_xx"
+else
+    echo "Error: Template day_xx not found."
+    rm "${TEMP_PROBLEM}"
+    exit 1
 fi
 
 mkdir -p "$DIR"
