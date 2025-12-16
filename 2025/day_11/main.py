@@ -52,7 +52,28 @@ def part_one(input_file: str):
     return dfs("you")
 
 
-def part_two(input_file: str): ...
+def part_two(input_file: str):
+    @lru_cache
+    def dfs(node, seen_dac, seen_fft) -> int:
+        if node == "out":
+            return 1 if seen_dac and seen_fft else 0
+        else:
+            res = 0
+            for nei in edges[node]:
+                new_seen_dac = seen_dac or nei == "dac"
+                new_seen_fft = seen_fft or nei == "fft"
+                res += dfs(nei, new_seen_dac, new_seen_fft)
+            return res
+
+    lines = parse_lines(input_file)
+    edges: dict[str, list[str]] = {}
+
+    for line in lines:
+        x, ys = line.split(": ")
+        ys = ys.split(" ")
+        edges[x] = ys
+
+    return dfs("svr", False, False)
 
 
 if __name__ == "__main__":
