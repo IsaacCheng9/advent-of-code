@@ -1,6 +1,7 @@
 import fileinput  # noqa
 import heapq  # noqa
 import math  # noqa
+import numpy as np
 import os  # noqa
 import re  # noqa
 import sys  # noqa
@@ -17,6 +18,7 @@ from bisect import bisect_left, bisect_right  # noqa
 from math import gcd, lcm  # noqa
 from pathlib import Path  # noqa
 from string import ascii_lowercase, ascii_uppercase  # noqa
+from scipy.optimize import linprog
 
 # Add the parent directory to the PYTHONPATH.
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -35,10 +37,9 @@ def part_one(input_file: str):
     lines = parse_lines(input_file)
     total_presses = 0
 
-    # Process each machine.
     for line in lines:
         target, *moves, counters = line.split()
-        # Create a set representing the lights that should be on.
+        # Parse target as a set of light indices that should be on.
         target = {index for index, light in enumerate(target[1:-1]) if light == "#"}
         buttons = [set(map(int, button[1:-1].split(","))) for button in moves]
         counters = list(map(int, counters[1:-1].split(",")))
@@ -48,12 +49,12 @@ def part_one(input_file: str):
         for num_buttons in range(1, len(buttons) + 1):
             for attempt in combinations(buttons, num_buttons):
                 lights = set()
-                # Use XOR to toggle the lights - this handles cases where we
-                # press a button twice. e.g. {1, 3} ^ {2, 3} = {1, 2}
+                # XOR simulates toggling: overlapping lights between buttons
+                # cancel out. e.g. {1, 3} ^ {2, 3} = {1, 2} (light 3 cancels).
                 for button in attempt:
                     lights ^= button
-                # The first match is guaranteed to be the optimal for that
-                # machine.
+                # First match is optimal since we try the smallest combinations
+                # first.
                 if lights == target:
                     total_presses += num_buttons
                     found = True
@@ -65,7 +66,41 @@ def part_one(input_file: str):
     return total_presses
 
 
-def part_two(input_file: str): ...
+def part_two(input_file: str):
+    lines = parse_lines(input_file)
+    total_presses = 0
+
+    for line in lines:
+        _, *moves, counters = line.split()
+        buttons = [set(map(int, button[1:-1].split(","))) for button in moves]
+        counters = list(map(int, counters[1:-1].split(",")))
+
+        num_buttons = len(buttons)
+        num_counters = len(counters)
+
+        # Objective: minimise total button presses: x0 + x1 + ... + xn,
+        c = [1] * num_buttons
+
+        # Build a constraint matrix A_eq, where A[i][j] = 1 if button j affects
+        # counter i.
+        A_eq = np.zeros((num_counters, num_buttons))
+        for j, button_indices in enumerate(buttons):
+            for i in button_indices:
+                A_eq[i, j] = 1
+
+        # Solve the linear program: minimise c.x, subject to A_eq.x = counters,
+        # x >= 0, x is an integer.
+        res = linprog(
+            c,
+            A_eq=A_eq,
+            b_eq=counters,
+            integrality=1,  # Forces solutions to be integers.
+        )
+
+        if res.success:
+            total_presses += int(round(res.fun))
+
+    return total_presses
 
 
 if __name__ == "__main__":
